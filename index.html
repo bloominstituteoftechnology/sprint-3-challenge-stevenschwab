@@ -58,7 +58,34 @@
       // 🧠 Implement a `getAllReversed` method which returns the ints in reverse order
       // ❗ WARNING: except for `getAllReversed`, methods must respect the order of the integers
       // ❗ WARNING: note that none of the methods actually mutate the `ints` property
-
+      constructor(...integers) {
+        this.ints = integers;
+      }
+      getAll() {
+        return this.ints;
+      }
+      getEvens() {
+        return this.ints.filter(int => int % 2 === 0);
+      }
+      getNegatives() {
+        return this.ints.filter(int => (int < 0));
+      }
+      getAllSquared() {
+        return this.ints.map(int => (int ** 2));
+      }
+      pop() {
+        return this.ints.pop();
+      }
+      push(int) {
+        this.ints.push(int)
+        return this.ints;
+      }
+      getEveryNth(n) {
+        return this.ints.filter((int, i) => (i % n === 0))
+      }
+      getAllReversed() {
+        return this.ints.reverse();
+      }
     }
 
     // 👉 CHALLENGE 2 NerfGun
@@ -76,7 +103,33 @@
       //      * When engaging the safety, return "Safety enabled!"
       //      * When disengaging the safety, return "Safety disabled!"
       // 🌟 HINT: instances need to keep track of their maximum capacity as well as their current capacity
-
+      constructor(ammo) {
+        this.currentCapacity = ammo
+        this.safety = true
+        this.maximumCapacity = ammo
+      }
+      shoot() {
+        if ((this.currentCapacity > 0) && !this.safety) {
+          this.currentCapacity--
+          return "Bang!";
+        } else if ((this.currentCapacity === 0) || this.safety) {
+          return "Click!";
+        }
+      }
+      reload(aNumber) {
+        if (aNumber <= 0  || typeof aNumber !== 'number') {
+          return "Error reloading!";
+        } else if ((this.currentCapacity + aNumber) > this.maximumCapacity) {
+          this.currentCapacity = this.maximumCapacity;
+        } else {
+          this.currentCapacity = this.currentCapacity + aNumber;
+        }
+        return `${this.currentCapacity} projectiles left!`;
+      }
+      toggleSafety() {
+        this.safety = !this.safety
+        return `Safety ${this.safety ? "enabled" : "disabled"}!`;
+      }
     }
 
     // 👉 CHALLENGE 3 EBook
@@ -95,7 +148,23 @@
       //    ebook.next() // returns null
       // 🌟 HINT: remember about the `slice` method which strings and arrays have
       // ❗ Feel free to implement `back`, although this is not required nor graded
-
+      constructor(bookText, numOfCharsInSinglePage) {
+        this.bookText = bookText
+        this.numOfCharsInSinglePage = numOfCharsInSinglePage
+        this.currentPage = 0
+        this.currentPageText = '';
+      }
+      next() {
+        if (this.currentPage > this.bookText.length) {
+          return null;
+        } else if ((this.currentPage < this.bookText.length) && ((this.currentPage + this.numOfCharsInSinglePage) > this.bookText.length)) {
+          this.currentPageText = this.bookText.slice(this.currentPage)
+        } else {
+          this.currentPageText = this.bookText.slice(this.currentPage, this.currentPage + this.numOfCharsInSinglePage)
+        }
+        this.currentPage += this.numOfCharsInSinglePage
+        return this.currentPageText
+      }
     }
 
     // 👉 CHALLENGE 4 AntFarm
